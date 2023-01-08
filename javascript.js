@@ -43,12 +43,45 @@ function playRound (playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    let outcome;
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Select Rock, Paper, or Scissors.");
-        outcome = playRound(playerSelection,getComputerChoice());
-        console.log(outcome);
+const rockBtn = document.getElementById("rock");
+const paperBtn = document.getElementById("paper");
+const scissorsBtn = document.getElementById("scissors");
+const scoreboard = document.querySelector('#scoreboard');
+const gameOutcome = document.createElement('p');
+const scoreboardContent = document.createElement('p');
+
+rockBtn.addEventListener('click', () => {
+    game("rock");
+});
+
+paperBtn.addEventListener('click', () => {
+    game("paper");
+});
+
+scissorsBtn.addEventListener('click', () => {
+    game("scissors");
+});
+
+let outcome;
+function game(playerSelection) {
+    const computerSelection = getComputerChoice();
+    outcome = playRound(playerSelection, computerSelection);
+    console.log(outcome);
+    
+    gameOutcome.textContent = outcome;
+    scoreboardContent.textContent = "Your Score: " + playerScore + " Computer Score: " + computerScore;
+    scoreboard.appendChild(gameOutcome);
+    scoreboard.appendChild(scoreboardContent);
+
+    if (playerScore == 5) {
+        rockBtn.disabled = true;
+        paperBtn.disabled = true;
+        scissorsBtn.disabled = true;
+        gameOutcome.textContent = "Game Over! You Win!";
+    } else if (computerScore == 5) {
+        rockBtn.disabled = true;
+        paperBtn.disabled = true;
+        scissorsBtn.disabled = true;
+        game.outcome.textContent = "Game Over! Computer Wins!"
     }
-    console.log("Player score: " + playerScore + " Computer Score: " + computerScore);
 }
